@@ -1,6 +1,8 @@
 
 package guia2_tp2;
 
+import javax.swing.JOptionPane;
+
 public class NewJFrame extends javax.swing.JFrame {
     
         int codigoSecreto;
@@ -9,14 +11,14 @@ public class NewJFrame extends javax.swing.JFrame {
 
     public NewJFrame() {
         initComponents();
-        
+        setLocationRelativeTo(null);
         codigoSecreto = (int) (Math.random() * 900) + 100;// Genero el número de 3 dígitos (100 a 999)
         //aca separo cada numero con division y modulo
         int d1 = codigoSecreto / 100;
         int d2 = (codigoSecreto / 10) % 10;
         int d3 = codigoSecreto % 10;
         
-        // aca convierto a texto cada numero y lo asigno 
+        // aca convierto a texto con la concatenacion y los " cada numero y lo asigno 
         num1.setText(d1 + "");
         num2.setText(d2 + "");
         num3.setText(d3 + "");
@@ -27,42 +29,44 @@ public class NewJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        intento = new javax.swing.JTextField();
+        txt_numeroTecleado = new javax.swing.JTextField();
         boton = new javax.swing.JButton();
-        pista = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         num2 = new javax.swing.JPasswordField();
         num3 = new javax.swing.JPasswordField();
         num1 = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        trofeo = new javax.swing.JPasswordField();
+        lbl_informacion = new javax.swing.JLabel();
+        lbl_trofeo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(java.awt.SystemColor.activeCaption);
 
-        intento.setBackground(new java.awt.Color(255, 204, 204));
-        intento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        intento.addActionListener(new java.awt.event.ActionListener() {
+        txt_numeroTecleado.setBackground(new java.awt.Color(255, 204, 204));
+        txt_numeroTecleado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_numeroTecleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                intentoActionPerformed(evt);
+                txt_numeroTecleadoActionPerformed(evt);
             }
         });
-        intento.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_numeroTecleado.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                intentoKeyPressed(evt);
+                txt_numeroTecleadoKeyPressed(evt);
             }
         });
 
-        boton.setText("revelar");
+        boton.setText("pista");
+        boton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botonMouseClicked(evt);
+            }
+        });
         boton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonActionPerformed(evt);
             }
         });
-
-        pista.setText("jLabel1");
 
         jDesktopPane1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -135,64 +139,49 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 51));
         jLabel1.setText("¡¡¡Adivina el codigo secreto!!!");
 
-        jLabel2.setFont(new java.awt.Font("Microsoft Himalaya", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 102));
-        jLabel2.setText("por favor ingresa exactamente 3 numeros");
-
-        trofeo.setEditable(false);
-        trofeo.setBackground(java.awt.SystemColor.activeCaption);
-        trofeo.setText("jPasswordField1");
-        trofeo.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
-        trofeo.setEchoChar(' ');
+        lbl_informacion.setFont(new java.awt.Font("Microsoft Himalaya", 1, 36)); // NOI18N
+        lbl_informacion.setForeground(new java.awt.Color(255, 255, 102));
+        lbl_informacion.setText("por favor ingresa exactamente 3 numeros");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(intento, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(boton, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(trofeo, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(txt_numeroTecleado, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(boton, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(lbl_trofeo, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(147, 147, 147)
+                        .addComponent(jLabel1)))
+                .addContainerGap(46, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(144, 144, 144))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(86, 86, 86))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(pista)
-                        .addGap(304, 304, 304))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbl_informacion)
+                    .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(110, 110, 110))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel1)
-                        .addGap(36, 36, 36)
-                        .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel2)
-                        .addGap(95, 95, 95)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(intento, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(boton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(418, 418, 418)
-                        .addComponent(trofeo, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19)
-                .addComponent(pista)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1)
+                .addGap(35, 35, 35)
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(lbl_informacion)
+                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_numeroTecleado, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_trofeo, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -213,45 +202,65 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_num3ActionPerformed
 
-    private void intentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intentoActionPerformed
+    private void txt_numeroTecleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_numeroTecleadoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_intentoActionPerformed
+    }//GEN-LAST:event_txt_numeroTecleadoActionPerformed
 
-    private void intentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_intentoKeyPressed
+    private void txt_numeroTecleadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_numeroTecleadoKeyPressed
            if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+        try{           
         
-        String numIngresado = intento.getText();
+        String numIngresado = txt_numeroTecleado.getText();//guardo en una variable el texto q despues convierto en numero
         
         // 2. Validación básica: Comprobar únicamente que tenga 3 caracteres
         if (numIngresado.length() != 3) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingresa exactamente 3 números."); //uso un cartel de advertencia q ofrece java
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingresa exactamente 3 números.");//con este solo evaluo los caracteres
+            //con el try si son tres los caracteres y son de letra los reconoce entonces elimino ese error
+            txt_numeroTecleado.setText("");//aca limpio lo que puso el usuario para q no tenga q borrar el
             return;
         }
         
-        int intentoUsuario = Integer.parseInt(numIngresado);//aca lo convierto a entero
+        int numeroConvertido = Integer.parseInt(numIngresado);//aca lo convierto a integer
         intentos = intentos + 1;//aca va a sumar cada intento q haga
         
-        // 4. Evaluar el número ingresado
-        if (intentoUsuario == codigoSecreto) {
+       //aca comparo si el numero es igual que se desenmascare todas las casillas 
+        if (numeroConvertido == codigoSecreto) {
             // Desenmascarar las 3 casillas
             num1.setEchoChar((char) 0);
             num2.setEchoChar((char) 0);
             num3.setEchoChar((char) 0);
             
-            trofeo.setText("¡Excelente! ¡Adivinaste el código!");
-            
+            // si adivino cargo el label trofeo 
+            lbl_informacion.setText("Felicidades Adivinaste el codigo");
+            lbl_trofeo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/guia2_tp2/trofeo.png")));
            
-            javax.swing.JOptionPane.showMessageDialog(this, "¡Ganaste!\nCódigo correcto: " + codigoSecreto + "\nIntentos totales: " + intentos);
             
-        } else if (intentoUsuario < codigoSecreto) {
-            pista.setText("El número secreto es MÁS ALTO.");
+            //cartel de victoria q miestra el numero y los intentos
+            javax.swing.JOptionPane.showMessageDialog(
+                this, 
+                "¡Ganaste!\nCódigo correcto: " + codigoSecreto + "\nIntentos totales: " + intentos, 
+                "¡Felicidades!", 
+                javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
+            
+            //aca le doy las pistas
+                                   
+        } else if (numeroConvertido < codigoSecreto) {
+            lbl_informacion.setText("El número secreto es MAS ALTO.");
+            txt_numeroTecleado.setText("");
         } else {
-            pista.setText("El número secreto es MÁS BAJO.");
+            lbl_informacion.setText("El número secreto es MAS BAJO.");
+            txt_numeroTecleado.setText("");
         }
+        
+    }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "uds debe ingresar solo numeros");
+            txt_numeroTecleado.setText("");
     }
+        }
 
         
-    }//GEN-LAST:event_intentoKeyPressed
+    }//GEN-LAST:event_txt_numeroTecleadoKeyPressed
 
     private void num1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num1ActionPerformed
         // TODO add your handling code here:
@@ -264,6 +273,28 @@ public class NewJFrame extends javax.swing.JFrame {
     private void num2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_num2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_num2ActionPerformed
+
+    private void botonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonMouseClicked
+            // TODO add your handling code here:
+            //aca pongo el codigo de que si hace un click se revela de a uno los numeros y solo permite 2 visualizaciones
+            // 1. Primera vez que presiona el botón: revela la primera casilla (num1)
+            switch (ayudasUsadas) {
+                case 0:
+                    num1.setEchoChar((char) 0);
+                    ayudasUsadas = 1; // Registramos que ya usó 1 ayuda
+                    break;
+                case 1:
+                    num2.setEchoChar((char) 0);
+                    ayudasUsadas = 2; // Registramos que ya usó las 2 ayudas permitidas
+                    break;
+                default:
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "¡Solo podes usar 2 pistas por juego!",
+                            "Límite de ayudas",
+                            javax.swing.JOptionPane.WARNING_MESSAGE);//aca en el cartel le asigna un titulo
+                    break;
+            }
+    }//GEN-LAST:event_botonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -302,15 +333,14 @@ public class NewJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton boton;
-    private javax.swing.JTextField intento;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lbl_informacion;
+    private javax.swing.JLabel lbl_trofeo;
     private javax.swing.JPasswordField num1;
     private javax.swing.JPasswordField num2;
     private javax.swing.JPasswordField num3;
-    private javax.swing.JLabel pista;
-    private javax.swing.JPasswordField trofeo;
+    private javax.swing.JTextField txt_numeroTecleado;
     // End of variables declaration//GEN-END:variables
 }
